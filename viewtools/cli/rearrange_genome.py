@@ -6,6 +6,7 @@ from pathlib import Path
 import click
 
 from .._logging import get_logger
+
 logger = get_logger()
 
 from ..core.utils import open_any, read_fastas, read_view, write_fasta
@@ -14,6 +15,7 @@ from . import cli, common_io_options
 
 UTIL_NAME = "viewtools_rearrange_genome"
 
+
 @click.command()
 @click.argument(
     "fasta",
@@ -21,20 +23,49 @@ UTIL_NAME = "viewtools_rearrange_genome"
     type=click.Path(exists=True, dir_okay=False, readable=True),
     required=True,
 )
-@click.option("--view", "-v", "view_path", required=True,
-              type=click.Path(exists=True, dir_okay=False, readable=True),
-              help="Path to bioframe-style view table (TSV/CSV). Must contain columns: chrom, start, end. Optional: name, strand, out_name.")
-@click.option("--out", "-o", "out_fasta", required=True,
-              help="Output FASTA path (use '-' for stdout). Automatically gzipped if ends with .gz.")
-@click.option("--only-modified", "-m", is_flag=True, default=False,
-              help="Only write contigs mentioned/modified in the view.")
-@click.option("--chroms", "-c", multiple=True,
-              help="Restrict output to specific chromosomes (space-separated list). E.g. '--chroms chr1 chr2'.")
-@click.option("--sep", "-s", default=None,
-              help="Separator used in the view file (defaults to tab autodetect).")
+@click.option(
+    "--view",
+    "-v",
+    "view_path",
+    required=True,
+    type=click.Path(exists=True, dir_okay=False, readable=True),
+    help="Path to bioframe-style view table (TSV/CSV). Must contain columns: chrom, start, end. Optional: name, strand, out_name.",
+)
+@click.option(
+    "--out",
+    "-o",
+    "out_fasta",
+    required=True,
+    help="Output FASTA path (use '-' for stdout). Automatically gzipped if ends with .gz.",
+)
+@click.option(
+    "--only-modified",
+    "-m",
+    is_flag=True,
+    default=False,
+    help="Only write contigs mentioned/modified in the view.",
+)
+@click.option(
+    "--chroms",
+    "-c",
+    multiple=True,
+    help="Restrict output to specific chromosomes (space-separated list). E.g. '--chroms chr1 chr2'.",
+)
+@click.option(
+    "--sep",
+    "-s",
+    default=None,
+    help="Separator used in the view file (defaults to tab autodetect).",
+)
 @common_io_options
-def cli(fasta: Tuple[Tuple[str, ...]], view_path: str, out_fasta: str,
-        only_modified: bool, chroms: Tuple[str, ...], sep: str):
+def cli(
+    fasta: Tuple[Tuple[str, ...]],
+    view_path: str,
+    out_fasta: str,
+    only_modified: bool,
+    chroms: Tuple[str, ...],
+    sep: str,
+):
     """
     Build a custom reference FASTA from input FASTA(s) using a bioframe-style view file.
     """
@@ -48,7 +79,7 @@ def cli(fasta: Tuple[Tuple[str, ...]], view_path: str, out_fasta: str,
             fasta_files.append(f)
     fasta_files = [str(Path(f)) for f in fasta_files]
     logger.info(f"Reading {len(fasta_files)} FASTA file(s)...")
-    
+
     seqs = read_fastas(fasta_files)
     view = read_view(view_path, sep)
     custom = rearrange_genome(seqs, view)
@@ -66,6 +97,7 @@ def cli(fasta: Tuple[Tuple[str, ...]], view_path: str, out_fasta: str,
         logger.info(f"Filtered to {len(final)} sequences matching --chroms")
 
     write_fasta(final, out_fasta)
+
 
 # --------------------------------------------------------------------------- #
 # Entry point

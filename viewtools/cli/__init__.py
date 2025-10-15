@@ -1,4 +1,5 @@
 """CLI module initialization."""
+
 import click
 import functools
 import sys
@@ -148,6 +149,7 @@ def common_io_options(func):
         return func(*args, **kwargs)
 
     return wrapper
+
 
 from . import rearrange_genome
 

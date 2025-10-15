@@ -2,13 +2,13 @@
 
 import tempfile
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pandas as pd
 import pytest
-from click.testing import CliRunner
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
+from click.testing import CliRunner
 
 from viewtools.cli.rearrange_genome import cli as rearrange_cli
 
@@ -86,7 +86,8 @@ class TestRearrangeGenomeCLI:
 
         # Missing --out
         result = runner.invoke(
-            rearrange_cli, ["dummy.fasta", "--view", "dummy.tsv"]  # positional argument
+            rearrange_cli,
+            ["dummy.fasta", "--view", "dummy.tsv"],  # positional argument
         )
         assert result.exit_code != 0
 

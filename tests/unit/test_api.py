@@ -1,7 +1,7 @@
 """Unit tests for API functionality."""
 
-import pytest
 import pandas as pd
+import pytest
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
