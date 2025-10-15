@@ -1,6 +1,5 @@
 """Sphinx configuration file for viewtools documentation."""
 
-import os
 import sys
 from pathlib import Path
 
