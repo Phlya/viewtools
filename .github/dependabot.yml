@@ -1,0 +1,20 @@
+version: 2
+updates:
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Enable version updates for pip
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    # Only update dev dependencies automatically
+    ignore:
+      - dependency-name: "click"
+      - dependency-name: "pandas"
+      - dependency-name: "biopython"
