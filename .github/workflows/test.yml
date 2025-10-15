@@ -17,7 +17,7 @@ jobs:
                 python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   # Fetch full history for setuptools-scm
                   fetch-depth: 0
@@ -56,7 +56,7 @@ jobs:
         # Test with minimal dependencies to ensure core functionality works
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   fetch-depth: 0
 
@@ -79,7 +79,7 @@ jobs:
         # Test that the package can be built and installed
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   fetch-depth: 0
 
