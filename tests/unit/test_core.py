@@ -7,8 +7,6 @@ from unittest.mock import mock_open, patch
 
 import pandas as pd
 import pytest
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
 
 from viewtools.core.utils import open_any, read_view, write_view
 

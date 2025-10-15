@@ -2,7 +2,7 @@
 
 import tempfile
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pandas as pd
 import pytest
@@ -210,7 +210,7 @@ class TestRearrangeGenomeCLI:
 
     @patch("viewtools.cli.rearrange_genome.read_fastas")
     @patch("viewtools.cli.rearrange_genome.read_view")
-    @patch("viewtools.cli.rearrange_genome.rearrange_genome")
+    @patch("viewtools.cli.rearrange_genome.rearrange_api")
     @patch("viewtools.cli.rearrange_genome.write_fasta")
     def test_integration_with_mocked_functions(
         self,

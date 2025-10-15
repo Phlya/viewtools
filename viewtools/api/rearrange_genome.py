@@ -1,6 +1,6 @@
 from collections import defaultdict
-import logging
 from typing import Dict
+
 import pandas as pd
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord

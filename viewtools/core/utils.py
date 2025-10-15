@@ -1,12 +1,10 @@
 """Core utilities and helper functions."""
 
-import sys
 import gzip
 import logging
-from typing import Tuple, List, Dict
-from pathlib import Path
+import sys
+from typing import Dict, List
 
-import click
 import pandas as pd
 from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
@@ -40,7 +38,8 @@ def read_fastas(paths: List[str]) -> Dict[str, SeqRecord]:
             for rec in SeqIO.parse(fh, "fasta"):
                 if rec.id in seqs:
                     logger.warning(
-                        f"Duplicate contig '{rec.id}' from {path}, overwriting previous one."
+                        f"Duplicate contig '{rec.id}' from {path}, "
+                        "overwriting previous one."
                     )
                 seqs[rec.id] = rec
     logger.info(f"Loaded {len(seqs)} sequences from {len(paths)} file(s).")

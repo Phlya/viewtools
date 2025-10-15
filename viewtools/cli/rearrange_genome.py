@@ -1,17 +1,25 @@
-import sys
-import logging
-from typing import Tuple
+import functools
 from pathlib import Path
+from typing import Tuple
 
 import click
 
 from .._logging import get_logger
+from ..api.rearrange_genome import rearrange_genome as rearrange_api
+from ..core.utils import read_fastas, read_view, write_fasta
 
 logger = get_logger()
 
-from ..core.utils import open_any, read_fastas, read_view, write_fasta
-from ..api.rearrange_genome import rearrange_genome
-from . import cli, common_io_options
+
+def common_io_options(func):
+    """Common I/O options decorator (placeholder for future options)."""
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    return wrapper
+
 
 UTIL_NAME = "viewtools_rearrange_genome"
 
@@ -29,14 +37,15 @@ UTIL_NAME = "viewtools_rearrange_genome"
     "view_path",
     required=True,
     type=click.Path(exists=True, dir_okay=False, readable=True),
-    help="Path to bioframe-style view table (TSV/CSV). Must contain columns: chrom, start, end. Optional: name, strand, out_name.",
+    help="Path to bioframe-style view table (TSV/CSV). Must contain columns:"
+    " chrom, start, end. Optional: name, strand, out_name.",
 )
 @click.option(
     "--out",
     "-o",
     "out_fasta",
     required=True,
-    help="Output FASTA path (use '-' for stdout). Automatically gzipped if ends with .gz.",
+    help="Output FASTA path ('-' for stdout). Automatically gzipped if ends with .gz",
 )
 @click.option(
     "--only-modified",
@@ -49,7 +58,8 @@ UTIL_NAME = "viewtools_rearrange_genome"
     "--chroms",
     "-c",
     multiple=True,
-    help="Restrict output to specific chromosomes (space-separated list). E.g. '--chroms chr1 chr2'.",
+    help="Restrict output to specific chromosomes (space-separated list)."
+    " E.g. '--chroms chr1 chr2'.",
 )
 @click.option(
     "--sep",
@@ -72,7 +82,8 @@ def cli(
     # Flatten nested tuples of FASTA paths
     fasta_files = []
     for f in fasta:
-        # If the shell expanded *.fa produces multiple files, Click collects them as tuples
+        # If the shell expanded *.fa produces multiple files, Click collects them as
+        # tuples
         if isinstance(f, (tuple, list)):
             fasta_files.extend(f)
         else:
@@ -82,7 +93,7 @@ def cli(
 
     seqs = read_fastas(fasta_files)
     view = read_view(view_path, sep)
-    custom = rearrange_genome(seqs, view)
+    custom = rearrange_api(seqs, view)
 
     # Merge logic
     if only_modified:

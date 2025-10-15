@@ -1,12 +1,13 @@
 """CLI module initialization."""
 
-import click
 import functools
-import sys
-from .. import __version__
 import logging
-from .._logging import get_logger
+import sys
 
+import click
+
+from .. import __version__
+from .._logging import get_logger
 
 CONTEXT_SETTINGS = {
     "help_option_names": ["-h", "--help"],
@@ -34,12 +35,7 @@ CONTEXT_SETTINGS = {
     default=False,
 )
 def cli(post_mortem, output_profile, verbose, debug):
-    """Flexible tools for Hi-C data processing.
-
-    All pairtools have a few common options, which should be typed _before_
-    the command name.
-
-    """
+    """Flexible tools for your views"""
     if post_mortem:
         import traceback
 
@@ -56,8 +52,8 @@ def cli(post_mortem, output_profile, verbose, debug):
         sys.excepthook = _excepthook
 
     if output_profile:
-        import cProfile
         import atexit
+        import cProfile
 
         pr = cProfile.Profile()
         pr.enable()
@@ -78,8 +74,9 @@ def cli(post_mortem, output_profile, verbose, debug):
         root_logger.setLevel(logging.DEBUG)
         if verbose > 1:  # pragma: no cover
             try:
-                import psutil
                 import atexit
+
+                import psutil
 
                 @atexit.register
                 def process_dump_at_exit():
@@ -118,7 +115,7 @@ def cli(post_mortem, output_profile, verbose, debug):
                     p = psutil.Process()
                     info_ = p.as_dict(process_attrs, ad_value="")
                     for key in process_attrs:
-                        root_logger.debug("PSINFO:'{}': {}".format(key, info_[key]))
+                        root_logger.debug(f"PSINFO:'{key}': {info_[key]}")
 
             except ImportError:
                 root_logger.warning("Install psutil to see process information.")
@@ -151,7 +148,6 @@ def common_io_options(func):
     return wrapper
 
 
-from . import rearrange_genome
-
 # Register commands
-cli.add_command(rearrange_genome.cli, name="rearrange-genome")
+# cli.add_command(rearrange_genome.cli, name="rearrange-genome")
+# from . import rearrange_genome
