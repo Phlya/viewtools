@@ -75,3 +75,73 @@ viewtools rearrange-genome genome.fasta.gz \
 viewtools rearrange-genome genome.fasta --view regions.tsv --out - | \
     samtools faidx -
 ```
+
+## Example 6: Rearranging BED Coordinates
+
+Rearrange genomic intervals to match a rearranged genome assembly:
+
+```bash
+# Create a view file defining the rearrangement
+cat > view.tsv << EOF
+chrom	start	end	name	strand	new_chrom
+chr1	0	1000000	seg1	+	custom_chr1
+chr1	2000000	3000000	seg2	-	custom_chr1
+chr2	0	1000000	seg3	+	custom_chr2
+EOF
+
+# Rearrange BED intervals
+viewtools rearrange-bedframe intervals.bed --view view.tsv --out rearranged.bed
+```
+
+## Example 7: BED Coordinate Rearrangement with Strand Handling
+
+```bash
+# Input intervals.bed
+# chrom	start	end	name	strand
+# chr1	100000	200000	gene1	+
+# chr1	2500000	2600000	gene2	-
+
+# Rearrange with strand handling
+viewtools rearrange-bedframe intervals.bed --view view.tsv --out rearranged.bed
+
+# The output will have:
+# - Coordinates transformed to the new assembly
+# - Strands combined (interval + view strand)
+# - Intervals split if they overlap multiple view segments
+```
+
+## Example 8: BED Rearrangement Python API
+
+```python
+import pandas as pd
+from viewtools.api.rearrange import rearrange_bedframe
+
+# Load data
+bedframe = pd.read_csv("intervals.bed", sep="\t")
+view = pd.read_csv("view.tsv", sep="\t")
+
+# Rearrange coordinates
+result = rearrange_bedframe(
+    bedframe, 
+    view, 
+    out_name_col="new_chrom",
+    split_overlaps=True
+)
+
+# Save output
+result.to_csv("rearranged.bed", sep="\t", index=False)
+```
+
+## Example 9: Using BED Rearrangement in Pipelines
+
+```bash
+# Read from stdin, write to stdout
+cat intervals.bed | viewtools rearrange-bedframe --view view.tsv | \
+    bedtools intersect -a stdin -b features.bed
+
+# Process without splitting overlaps
+viewtools rearrange-bedframe intervals.bed \
+    --view view.tsv \
+    --no-split-overlaps | \
+    bedtools sort
+```

@@ -11,9 +11,20 @@
 
 ## API Functions
 
+### Genome Rearrangement
+
 ```{eval-rst}
-.. automodule:: viewtools.api.rearrange_genome
-   :members:
+.. automodule:: viewtools.api.rearrange
+   :members: rearrange_genome
+   :undoc-members:
+   :show-inheritance:
+```
+
+### BED Coordinate Rearrangement
+
+```{eval-rst}
+.. automodule:: viewtools.api.rearrange
+   :members: rearrange_bedframe
    :undoc-members:
    :show-inheritance:
 ```

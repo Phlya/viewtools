@@ -42,3 +42,29 @@ chrom	start	end	name	strand	out_name
 chr1	1000	2000	region1	+	new_chr1
 chr2	5000	6000	region2	-	new_chr2
 ```
+
+## Rearranging BED Coordinates
+
+When you rearrange a genome, you may also need to rearrange genomic annotations (BED files, intervals) to match the new coordinates:
+
+```bash
+# Rearrange BED intervals to match rearranged genome
+viewtools rearrange-bedframe intervals.bed --view regions.tsv --out rearranged.bed
+```
+
+### Python API for BED Rearrangement
+
+```python
+import pandas as pd
+from viewtools.api.rearrange import rearrange_bedframe
+
+# Load data
+bedframe = pd.read_csv("intervals.bed", sep="\t")
+view = pd.read_csv("regions.tsv", sep="\t")
+
+# Rearrange coordinates
+result = rearrange_bedframe(bedframe, view, out_name_col="out_name")
+
+# Save
+result.to_csv("rearranged.bed", sep="\t", index=False)
+```

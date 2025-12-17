@@ -60,8 +60,8 @@ def rearrange_bedframe(
     assembly based on the view specifications. Each row in the view defines
     how regions from the original assembly should be placed in the new assembly.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     df : pd.DataFrame
         Bed-like DataFrame with at least columns: chrom, start, end
         Additional columns will be preserved in the output
@@ -76,8 +76,8 @@ def rearrange_bedframe(
         If False, assigns each interval to the view segment with the largest
         overlap.
 
-    Returns:
-    --------
+    Returns
+    -------
     pd.DataFrame
         Rearranged DataFrame with coordinates mapped to the new assembly
         Coordinates are adjusted based on concatenated segment positions
