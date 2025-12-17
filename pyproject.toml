@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=64", "setuptools_scm[toml]>=6.2"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
 [project]
 name = "viewtools"
@@ -54,12 +54,11 @@ Homepage = "https://github.com/yourusername/viewtools"
 Repository = "https://github.com/yourusername/viewtools"
 Issues = "https://github.com/yourusername/viewtools/issues"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["viewtools*"]
+[tool.hatch.version]
+source = "vcs"
 
-[tool.setuptools_scm]
-write_to = "viewtools/_version.py"
+[tool.hatch.build.targets.wheel]
+packages = ["viewtools"]
 
 [tool.black]
 line-length = 88
