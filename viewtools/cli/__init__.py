@@ -8,6 +8,7 @@ import click
 
 from .. import __version__
 from .._logging import get_logger
+from . import rearrange_bedframe, rearrange_genome
 
 CONTEXT_SETTINGS = {
     "help_option_names": ["-h", "--help"],
@@ -149,7 +150,6 @@ def common_io_options(func):
 
 
 # Register commands
-from . import rearrange_bedframe, rearrange_genome
 
 cli.add_command(rearrange_genome.cli, name="rearrange-genome")
 cli.add_command(rearrange_bedframe.cli, name="rearrange-bedframe")
