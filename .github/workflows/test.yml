@@ -71,9 +71,9 @@ jobs:
           pip install -e .
           pip install pytest
 
-      - name: Run core tests
+      - name: Run tests
         run: |
-          pytest tests/unit/*.py -v
+          pytest tests/ -v
 
   package:
     # Test that the package can be built and installed
