@@ -1,0 +1,3 @@
+chrom	start	end	name	strand
+chr1	50	150	interval1	+
+chr1	120	180	interval2	-

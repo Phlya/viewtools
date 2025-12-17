@@ -5,7 +5,7 @@ from typing import Tuple
 import click
 
 from .._logging import get_logger
-from ..api.rearrange_genome import rearrange_genome as rearrange_api
+from ..api.rearrange import rearrange_genome as rearrange_api
 from ..core.utils import read_fastas, read_view, write_fasta
 
 logger = get_logger()

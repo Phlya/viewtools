@@ -149,5 +149,7 @@ def common_io_options(func):
 
 
 # Register commands
-# cli.add_command(rearrange_genome.cli, name="rearrange-genome")
-# from . import rearrange_genome
+from . import rearrange_bedframe, rearrange_genome
+
+cli.add_command(rearrange_genome.cli, name="rearrange-genome")
+cli.add_command(rearrange_bedframe.cli, name="rearrange-bedframe")

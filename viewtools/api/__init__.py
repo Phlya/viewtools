@@ -1,5 +1,5 @@
 """API module initialization."""
 
-from . import rearrange_genome
+from .rearrange import rearrange_genome, rearrange_bedframe
 
-__all__ = ["rearrange_genome"]
+__all__ = ["rearrange_genome", "rearrange_bedframe"]

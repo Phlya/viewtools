@@ -10,7 +10,7 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from click.testing import CliRunner
 
-from viewtools.api.rearrange_genome import rearrange_genome
+from viewtools.api.rearrange import rearrange_genome
 from viewtools.cli.rearrange_genome import cli as rearrange_cli
 from viewtools.core.utils import read_fastas, read_view, write_fasta, write_view
 
@@ -52,7 +52,7 @@ class TestEndToEndWorkflow:
                 "new_chrom": [
                     "scaffold1",
                     "scaffold2",
-                    "scaffold1",
+                    "scaffold2",
                     "scaffold2",
                     "scaffold3",
                 ],

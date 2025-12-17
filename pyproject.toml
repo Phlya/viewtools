@@ -28,6 +28,7 @@ dependencies = [
     "click",
     "pandas",
     "biopython",
+    "bioframe",
 ]
 dynamic = ["version"]
 

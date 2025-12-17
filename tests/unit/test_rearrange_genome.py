@@ -5,7 +5,7 @@ import pytest
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
-from viewtools.api.rearrange_genome import rearrange_genome
+from viewtools.api.rearrange import rearrange_genome
 
 
 class TestRearrangeGenome:
