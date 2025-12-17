@@ -67,6 +67,8 @@ line-length = 88
 [tool.ruff]
 line-length = 88
 target-version = "py38"
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP"]
 
 [tool.pytest.ini_options]
