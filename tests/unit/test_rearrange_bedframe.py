@@ -6,7 +6,7 @@ from viewtools.api import rearrange_bedframe
 
 
 def test_split_overlaps_true():
-    """Test that intervals spanning multiple segments are split when split_overlaps=True"""
+    """Test intervals spanning multiple segments are split with split_overlaps=True."""
     # Create test data: an interval that spans two view segments
     df = pd.DataFrame(
         {
