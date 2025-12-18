@@ -60,6 +60,11 @@ UTIL_NAME = "viewtools_rearrange_genome"
     default=None,
     help="Separator used in the view file (defaults to tab autodetect).",
 )
+@click.option(
+    "--add-description/--no-add-description",
+    default=False,
+    help="Whether to add detailed description of sequence origin to FASTA headers.",
+)
 @common_io_options
 def cli(
     fasta: Tuple[Tuple[str, ...]],
@@ -67,6 +72,7 @@ def cli(
     out_fasta: str,
     chroms: Tuple[str, ...],
     sep: str,
+    add_description: bool,
 ):
     """
     Build a custom reference FASTA from input FASTA(s) using a bioframe-style view file.
@@ -85,7 +91,7 @@ def cli(
 
     seqs = read_fastas(fasta_files)
     view = read_view(view_path, sep)
-    custom = rearrange_api(seqs, view)
+    custom = rearrange_api(seqs, view, add_description=add_description)
 
     if chroms:
         chroms = set(chroms)

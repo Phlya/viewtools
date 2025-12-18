@@ -14,7 +14,10 @@ __all__ = ["rearrange_genome", "rearrange_bedframe"]
 
 
 def rearrange_genome(
-    seqs: Dict[str, SeqRecord], view: pd.DataFrame, out_name_col: str = "new_chrom"
+    seqs: Dict[str, SeqRecord],
+    view: pd.DataFrame,
+    out_name_col: str = "new_chrom",
+    add_description: bool = True,
 ) -> Dict[str, SeqRecord]:
     """
     Extract and concatenate sequences according to view rows grouped by 'out_name'.
@@ -40,8 +43,15 @@ def rearrange_genome(
     custom = {}
     for out_name, segments in grouped.items():
         full_seq = Seq("").join([s[4] for s in segments])
-        desc = "; ".join([f"{c}:{s}-{e}({strand})" for c, s, e, strand, _ in segments])
-        custom[out_name] = SeqRecord(full_seq, id=out_name, description=f"from {desc}")
+        if add_description:
+            desc = "; ".join(
+                [f"{c}:{s}-{e}({strand})" for c, s, e, strand, _ in segments]
+            )
+            custom[out_name] = SeqRecord(
+                full_seq, id=out_name, description=f"from {desc}"
+            )
+        else:
+            custom[out_name] = SeqRecord(full_seq, id=out_name, description="")
 
     logger.info(f"Created {len(custom)} concatenated sequences.")
     return custom
