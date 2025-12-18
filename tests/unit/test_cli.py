@@ -134,22 +134,6 @@ class TestRearrangeGenomeCLI:
             Path(fasta1).unlink()
             Path(fasta2).unlink()
 
-    def test_only_modified_flag(self, runner, temp_fasta, temp_view, temp_output):
-        """Test the --only-modified flag."""
-        result = runner.invoke(
-            rearrange_cli,
-            [
-                temp_fasta,  # positional argument
-                "--view",
-                temp_view,
-                "--out",
-                temp_output,
-                "--only-modified",
-            ],
-        )
-
-        assert result.exit_code == 0
-
     def test_chroms_filter(self, runner, temp_fasta, temp_view, temp_output):
         """Test the --chroms filter option."""
         result = runner.invoke(

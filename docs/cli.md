@@ -18,7 +18,6 @@ viewtools rearrange-genome [OPTIONS] FASTA...
 
 - `--view, -v PATH`: Path to bioframe-style view table (required)
 - `--out, -o PATH`: Output FASTA path, use '-' for stdout (required)
-- `--only-modified, -m`: Only write contigs mentioned/modified in the view
 - `--chroms, -c TEXT`: Restrict output to specific chromosomes (multiple)
 - `--sep, -s TEXT`: Separator used in view file (default: tab)
 - `--verbose, -v`: Enable verbose logging
@@ -33,9 +32,6 @@ viewtools rearrange-genome genome.fasta --view regions.tsv --out custom.fasta
 
 # Multiple input files
 viewtools rearrange-genome chr*.fasta --view regions.tsv --out custom.fasta
-
-# Only modified contigs
-viewtools rearrange-genome genome.fasta --view regions.tsv --out custom.fasta --only-modified
 
 # Specific chromosomes only
 viewtools rearrange-genome genome.fasta --view regions.tsv --out custom.fasta --chroms chr1 chr2

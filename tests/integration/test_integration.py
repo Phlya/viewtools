@@ -238,7 +238,7 @@ class TestEndToEndWorkflow:
             assert len(output_seqs["combined"].seq) == 30
 
     def test_filter_operations(self, sample_genome, complex_view):
-        """Test filtering operations (only-modified, chroms)."""
+        """Test filtering operations with chroms flag."""
         runner = CliRunner()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -251,24 +251,8 @@ class TestEndToEndWorkflow:
             view_path = tmpdir / "view.tsv"
             write_view(complex_view, str(view_path))
 
-            # Test only-modified flag
-            output1_path = tmpdir / "output_modified.fasta"
-            result = runner.invoke(
-                rearrange_cli,
-                [
-                    str(fasta_path),
-                    "--view",
-                    str(view_path),
-                    "--out",
-                    str(output1_path),
-                    "--only-modified",
-                ],
-            )
-
-            assert result.exit_code == 0
-
             # Test chroms filter
-            output2_path = tmpdir / "output_filtered.fasta"
+            output_path = tmpdir / "output_filtered.fasta"
             result = runner.invoke(
                 rearrange_cli,
                 [
@@ -276,7 +260,7 @@ class TestEndToEndWorkflow:
                     "--view",
                     str(view_path),
                     "--out",
-                    str(output2_path),
+                    str(output_path),
                     "--chroms",
                     "scaffold1",
                     "--chroms",
@@ -287,10 +271,15 @@ class TestEndToEndWorkflow:
             assert result.exit_code == 0
 
             # Verify filtered output
-            filtered_seqs = read_fastas([str(output2_path)])
-            # Should not contain scaffold3 or original chromosomes
+            filtered_seqs = read_fastas([str(output_path)])
+            # Should contain scaffold1 and scaffold2 only
+            assert "scaffold1" in filtered_seqs
+            assert "scaffold2" in filtered_seqs
+            # Should not contain scaffold3 or unmodified chromosomes
             assert "scaffold3" not in filtered_seqs
             assert "chr1" not in filtered_seqs
+            assert "chr2" not in filtered_seqs
+            assert "chr3" not in filtered_seqs
 
     def test_error_handling_integration(self):
         """Test error handling in integrated workflows."""

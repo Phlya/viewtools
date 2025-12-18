@@ -48,13 +48,6 @@ UTIL_NAME = "viewtools_rearrange_genome"
     help="Output FASTA path ('-' for stdout). Automatically gzipped if ends with .gz",
 )
 @click.option(
-    "--only-modified",
-    "-m",
-    is_flag=True,
-    default=False,
-    help="Only write contigs mentioned/modified in the view.",
-)
-@click.option(
     "--chroms",
     "-c",
     multiple=True,
@@ -72,7 +65,6 @@ def cli(
     fasta: Tuple[Tuple[str, ...]],
     view_path: str,
     out_fasta: str,
-    only_modified: bool,
     chroms: Tuple[str, ...],
     sep: str,
 ):
@@ -95,19 +87,12 @@ def cli(
     view = read_view(view_path, sep)
     custom = rearrange_api(seqs, view)
 
-    # Merge logic
-    if only_modified:
-        final = custom
-    else:
-        final = seqs.copy()
-        final.update(custom)
-
     if chroms:
         chroms = set(chroms)
-        final = {k: v for k, v in final.items() if k in chroms}
-        logger.info(f"Filtered to {len(final)} sequences matching --chroms")
+        custom = {k: v for k, v in custom.items() if k in chroms}
+        logger.info(f"Filtered to {len(custom)} sequences matching --chroms")
 
-    write_fasta(final, out_fasta)
+    write_fasta(custom, out_fasta)
 
 
 # --------------------------------------------------------------------------- #

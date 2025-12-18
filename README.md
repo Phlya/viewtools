@@ -116,7 +116,6 @@ viewtools rearrange-genome [OPTIONS] FASTA...
 **Options:**
 - `--view, -v PATH`: View table path (required)
 - `--out, -o PATH`: Output FASTA path, use '-' for stdout (required)
-- `--only-modified, -m`: Only write contigs mentioned in the view
 - `--chroms, -c TEXT`: Restrict output to specific chromosomes
 - `--sep, -s TEXT`: Separator used in view file (default: tab)
 
