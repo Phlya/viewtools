@@ -31,7 +31,7 @@ def sample_view_dataframe():
             "end": [5, 10, 15],
             "name": ["region1", "region2", "region3"],
             "strand": ["+", "+", "-"],
-            "new_chrom": ["custom1", "custom2", "custom1"],
+            "out_name": ["custom1", "custom2", "custom1"],
         }
     )
 
@@ -81,7 +81,7 @@ def minimal_view():
             "end": [10],
             "name": [None],
             "strand": [None],
-            "new_chrom": [None],
+            "out_name": [None],
         }
     )
 

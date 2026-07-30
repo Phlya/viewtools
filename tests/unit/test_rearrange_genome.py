@@ -30,7 +30,7 @@ class TestRearrangeGenome:
                 "end": [5, 10, 15],
                 "name": ["region1", "region2", "region3"],
                 "strand": ["+", "+", "-"],
-                "new_chrom": ["custom1", "custom2", "custom1"],
+                "out_name": ["custom1", "custom2", "custom1"],
             }
         )
 
@@ -64,7 +64,7 @@ class TestRearrangeGenome:
                 "end": [5, 5, 5],
                 "name": ["region1", "region2", "region3"],
                 "strand": ["+", "+", "+"],
-                "new_chrom": ["out1", "out2", "out3"],
+                "out_name": ["out1", "out2", "out3"],
             }
         )
 
@@ -81,7 +81,7 @@ class TestRearrangeGenome:
                 "end": [10],
                 "name": ["test"],
                 "strand": ["-"],
-                "new_chrom": ["reversed"],
+                "out_name": ["reversed"],
             }
         )
 
@@ -91,7 +91,7 @@ class TestRearrangeGenome:
         assert str(result["reversed"].seq) == str(expected)
 
     def test_default_naming(self, sample_sequences):
-        """Test default naming when new_chrom is not provided."""
+        """Test default naming when out_name is not provided."""
         view = pd.DataFrame(
             {
                 "chrom": ["chr1"],
@@ -99,7 +99,7 @@ class TestRearrangeGenome:
                 "end": [5],
                 "name": ["test_region"],
                 "strand": ["+"],
-                "new_chrom": [None],
+                "out_name": [None],
             }
         )
 
@@ -109,7 +109,7 @@ class TestRearrangeGenome:
         assert "test_region" in result
 
     def test_coordinate_naming_fallback(self, sample_sequences):
-        """Test coordinate-based naming when both new_chrom and name are None."""
+        """Test coordinate-based naming when both out_name and name are None."""
         view = pd.DataFrame(
             {
                 "chrom": ["chr1"],
@@ -117,7 +117,7 @@ class TestRearrangeGenome:
                 "end": [5],
                 "name": [None],
                 "strand": ["+"],
-                "new_chrom": [None],
+                "out_name": [None],
             }
         )
 
@@ -135,7 +135,7 @@ class TestRearrangeGenome:
                 "end": [5, 5, 10],
                 "name": ["r1", "r2", "r3"],
                 "strand": ["+", "+", "+"],
-                "new_chrom": ["combined", "combined", "combined"],
+                "out_name": ["combined", "combined", "combined"],
             }
         )
 
@@ -152,7 +152,7 @@ class TestRearrangeGenome:
     def test_empty_view(self, sample_sequences):
         """Test handling of empty view DataFrame."""
         view = pd.DataFrame(
-            columns=["chrom", "start", "end", "name", "strand", "new_chrom"]
+            columns=["chrom", "start", "end", "name", "strand", "out_name"]
         )
 
         result = rearrange_genome(sample_sequences, view)
@@ -168,7 +168,7 @@ class TestRearrangeGenome:
                 "end": [5, 10],
                 "name": ["r1", "r2"],
                 "strand": ["+", "-"],
-                "new_chrom": ["combined", "combined"],
+                "out_name": ["combined", "combined"],
             }
         )
 

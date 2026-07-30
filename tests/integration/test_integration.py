@@ -49,7 +49,7 @@ class TestEndToEndWorkflow:
                 "end": [10, 20, 30, 15, 10],
                 "name": ["region1", "region2", "region3", "region4", "region5"],
                 "strand": ["+", "-", "+", "-", "+"],
-                "new_chrom": [
+                "out_name": [
                     "scaffold1",
                     "scaffold2",
                     "scaffold2",
@@ -151,7 +151,7 @@ class TestEndToEndWorkflow:
                     "end": [10],
                     "name": ["test"],
                     "strand": ["+"],
-                    "new_chrom": ["output1"],
+                    "out_name": ["output1"],
                 }
             )
 
@@ -206,7 +206,7 @@ class TestEndToEndWorkflow:
                     "end": [10, 10, 10],
                     "name": ["r1", "r2", "r3"],
                     "strand": ["+", "+", "+"],
-                    "new_chrom": ["combined", "combined", "combined"],
+                    "out_name": ["combined", "combined", "combined"],
                 }
             )
 
@@ -296,7 +296,7 @@ class TestEndToEndWorkflow:
                     "end": [10],
                     "name": ["test"],
                     "strand": ["+"],
-                    "new_chrom": ["output"],
+                    "out_name": ["output"],
                 }
             )
 

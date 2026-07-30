@@ -36,7 +36,7 @@ class TestRearrangeGenomeCLI:
     def temp_view(self):
         """Create a temporary view file."""
         with tempfile.NamedTemporaryFile(mode="w", suffix=".tsv", delete=False) as f:
-            f.write("chrom\tstart\tend\tname\tstrand\tnew_chrom\n")
+            f.write("chrom\tstart\tend\tname\tstrand\tout_name\n")
             f.write("chr1\t0\t10\tregion1\t+\tcustom1\n")
             f.write("chr2\t5\t15\tregion2\t-\tcustom2\n")
             temp_path = f.name
@@ -155,7 +155,7 @@ class TestRearrangeGenomeCLI:
         """Test custom separator option."""
         # Create CSV view file
         with tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False) as f:
-            f.write("chrom,start,end,name,strand,new_chrom\n")
+            f.write("chrom,start,end,name,strand,out_name\n")
             f.write("chr1,0,10,region1,+,custom1\n")
             csv_view = f.name
 
@@ -216,7 +216,7 @@ class TestRearrangeGenomeCLI:
                 "end": [4],
                 "name": ["test"],
                 "strand": ["+"],
-                "new_chrom": ["custom"],
+                "out_name": ["custom"],
             }
         )
         mock_rearrange.return_value = {"custom": SeqRecord(Seq("ATCG"), id="custom")}

@@ -16,7 +16,7 @@ __all__ = ["rearrange_genome", "rearrange_bedframe"]
 def rearrange_genome(
     seqs: Dict[str, SeqRecord],
     view: pd.DataFrame,
-    out_name_col: str = "new_chrom",
+    out_name_col: str = "out_name",
     add_description: bool = True,
 ) -> Dict[str, SeqRecord]:
     """
@@ -32,10 +32,10 @@ def rearrange_genome(
 
         start, end = int(row["start"]), int(row["end"])
         subseq = seqs[chrom].seq[start:end]
-        if row["strand"] == "-":
+        if row.get("strand", "+") == "-":
             subseq = subseq.reverse_complement()
 
-        out_name = row[out_name_col] or row["name"] or f"{chrom}:{start}-{end}"
+        out_name = row.get(out_name_col) or row.get("name") or f"{chrom}:{start}-{end}"
         grouped[out_name].append(
             (chrom, start, end, str(row.get("strand", "+")), subseq)
         )

@@ -42,7 +42,7 @@ uv pip install -e ".[dev]"
 ```bash
 # Create a view file (TSV)
 cat > view.tsv << EOF
-chrom	start	end	name	strand	new_chrom
+chrom	start	end	name	strand	out_name
 chr1	1000000	2000000	region1	+	custom_chr1
 chr2	500000	1500000	region2	-	custom_chr1
 EOF
@@ -55,10 +55,10 @@ viewtools rearrange-genome genome.fasta --view view.tsv --out custom_genome.fast
 
 ```bash
 # Rearrange genomic intervals to match the new assembly
-viewtools rearrange-bedframe intervals.bed --view view.tsv --out rearranged.bed
+viewtools rearrange-bedframe intervals.bed --view view.tsv --out rearranged.bed --out-name-col out_name
 
 # Use with pipes
-cat intervals.bed | viewtools rearrange-bedframe --view view.tsv | head
+cat intervals.bed | viewtools rearrange-bedframe --view view.tsv --out-name-col out_name | head
 ```
 
 ### Python API
@@ -71,12 +71,12 @@ from viewtools.api.rearrange import rearrange_genome, rearrange_bedframe
 # Rearrange genome sequences
 sequences = read_fastas(["genome.fasta"])
 view = read_view("view.tsv")
-custom_sequences = rearrange_genome(sequences, view, out_name_col="new_chrom")
+custom_sequences = rearrange_genome(sequences, view)
 write_fasta(custom_sequences, "custom_genome.fasta")
 
 # Rearrange BED coordinates
 bedframe = pd.read_csv("intervals.bed", sep="\t")
-rearranged = rearrange_bedframe(bedframe, view, out_name_col="new_chrom")
+rearranged = rearrange_bedframe(bedframe, view, out_name_col="out_name")
 rearranged.to_csv("rearranged.bed", sep="\t", index=False)
 ```
 
@@ -88,7 +88,7 @@ View files are TSV/CSV files that define how to rearrange genomic regions:
 - `chrom`: Source chromosome name
 - `start`: Start position (0-based)
 - `end`: End position (exclusive)
-- `new_chrom`: Target chromosome name (or custom column via `--out-name-col`)
+- Target chromosome name column: `out_name` for `rearrange-genome` (default), `new_chrom` for `rearrange-bedframe` (default), or any custom column via `--out-name-col`
 
 **Optional columns:**
 - `name`: Region name
@@ -97,7 +97,7 @@ View files are TSV/CSV files that define how to rearrange genomic regions:
 **Example:**
 
 ```tsv
-chrom	start	end	name	strand	new_chrom
+chrom	start	end	name	strand	out_name
 chr1	0	1000000	seg1	+	custom1
 chr1	2000000	3000000	seg2	-	custom1
 chr2	0	1000000	seg3	+	custom2
